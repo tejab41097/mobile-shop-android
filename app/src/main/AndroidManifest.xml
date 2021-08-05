@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileShop">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
             android:theme="@style/Theme.Design.NoActionBar">

@@ -1,6 +1,6 @@
 package com.tejas.mobileshop.di
 
-import com.tejas.mobileshop.MainActivity
+import com.tejas.mobileshop.ui.MainActivity
 import dagger.Subcomponent
 
 @Subcomponent

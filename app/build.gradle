@@ -7,7 +7,8 @@ plugins {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 30
+    buildToolsVersion '30.0.3'
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.tejas.mobileshop"
@@ -20,12 +21,9 @@ android {
         buildConfigField("String", "BASE_URL", "\"https://my-json-server.typicode.com/\"")
 
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -34,12 +32,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
-    buildToolsVersion '30.0.3'
-    compileSdkVersion 30
+
 }
 
 dependencies {
@@ -59,6 +59,9 @@ dependencies {
 
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigation"
 
     testImplementation 'junit:junit:4.13.2'
 
