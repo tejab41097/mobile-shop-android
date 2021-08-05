@@ -9,7 +9,7 @@ import com.tejas.mobileshop.model.Option
 
 class MainAdapter : RecyclerView.Adapter<MobileViewHolder>() {
     private var data: MutableList<Option> = mutableListOf()
-
+    lateinit var itemClickListener: ItemClickListener
     fun submitList(albums: MutableList<Option>) {
         data = albums
         notifyDataSetChanged()
@@ -28,8 +28,14 @@ class MainAdapter : RecyclerView.Adapter<MobileViewHolder>() {
         holder.view.tvTitle.text = data[position].name
             .replace("e", "")
             .replace("E", "")
+        holder.view.root.setOnClickListener {
+            itemClickListener.click(data[position])
+        }
     }
 
+    interface ItemClickListener {
+        fun click(model: Option)
+    }
 }
 
 class MobileViewHolder(val view: ItemMobileBinding) : RecyclerView.ViewHolder(view.root)

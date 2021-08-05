@@ -1,20 +1,22 @@
 package com.tejas.mobileshop.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tejas.mobileshop.database.Database
 import com.tejas.mobileshop.model.BaseModel
-import com.tejas.mobileshop.model.Feature
 import com.tejas.mobileshop.repository.MainRepository
 import com.tejas.mobileshop.util.Coroutine
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val mainRepository: MainRepository
+    private val mainRepository: MainRepository,
+    private val database: Database
 ) : ViewModel() {
 
-    fun getData(): LiveData<List<Feature>> {
-        val mutableLiveData = MutableLiveData<List<Feature>>()
+    init {
+        getData()
+    }
+
+    private fun getData() {
         Coroutine.ioThenIO({
             try {
                 mainRepository.getData()
@@ -24,11 +26,11 @@ class MainViewModel @Inject constructor(
         }, {
             if (it?.isSuccessful == true) {
                 val model = it.body() as BaseModel
-                mutableLiveData.postValue(model.features)
-            } else {
+                database.getBaseDao().saveAllFeatures(model)
+            } else
                 it?.errorBody().toString()
-            }
         })
-        return mutableLiveData
     }
+
+    fun getAllMobiles() = database.getBaseDao().getFeatureById(1)
 }
